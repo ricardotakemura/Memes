@@ -19,23 +19,25 @@ class MemeActivityView : AppCompatActivity(), MemeView, SwipeRefreshLayout.OnRef
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_meme)
-        TODO("- Criar uma transação de fragmento, chamando o método beginTransaction da propriedade supportFragmentManager" +
-                "- Através do objeto retornado da função acima, usar o método add, passando como paramêtro o valor R.id.mainConstraintLayout e a propriedade memeSplashFragment" +
-                "- Chamar o método commit deste objeto" +
-                "- Chamar o método callGetMemes da propridade memePresenter")
+        val transaction = supportFragmentManager.beginTransaction()
+        transaction.add(R.id.mainConstraintLayout, memeSplashFragment)
+        transaction.commit()
+        memePresenter.callGetMemes()
     }
 
     override fun onReceivedMemes(memes: ArrayList<Meme>) {
-        TODO("- Se a propriedade memeListFragment estiver vazia:" +
-                "1. Criar uma transação de fragmento, chamando o método beginTransaction da propriedade supportFragmentManager" +
-                "2. Instânciar a propriedade memeListFragment através da função estática newInstance da classe MemeListFragment" +
-                "3. Através do objeto retornado da função acima, usar o método replace, passando como paramêtro o valor R.id.mainConstraintLayout e a propriedade memeListFragment" +
-                "4. Chamar o método commit deste objeto" +
-                "- Senão:" +
-                "1. Chamar o método reload da propriedade memeListFragment passando como paramêtro a lista recebida")
+        if (memeListFragment == null) {
+            val transaction = supportFragmentManager.beginTransaction()
+            memeListFragment = MemeListFragment.newInstance(memes)
+            transaction.replace(R.id.mainConstraintLayout, memeListFragment!!)
+            memeListFragment?.setOnRefreshListener(this)
+            transaction.commit()
+        } else {
+            memeListFragment?.reload(memes)
+        }
     }
 
     override fun onRefresh() {
-        TODO("Chamar o método callGetMemes da propridade memePresenter")
+        memePresenter.callGetMemes()
     }
 }

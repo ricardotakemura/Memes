@@ -11,17 +11,18 @@ class MemeAsyncTaskPresenter(private val memeView: MemeView, private val memeMod
 
     private class MemeAsyncTask(private val memeView: MemeView, private val memeModel: MemeModel): AsyncTask<Void, Void, ArrayList<Meme>>() {
         override fun doInBackground(vararg params: Void?): ArrayList<Meme> {
-            TODO("Chamar o método getMemes do objeto memeModel e retornar a lista devolvida")
+            return memeModel.getMemes()
         }
 
         override fun onPostExecute(result: ArrayList<Meme>?) {
-            TODO("Chamar o método onReceivedMemes do objeto memeView e passar a lista recebida como parâmetro")
+            super.onPostExecute(result)
+            memeView.onReceivedMemes(result!!)
         }
     }
 
     override fun callGetMemes() {
-        TODO("- Chamar o método cancel do objeto asyncTask" +
-                "- Instanciar o objeto asyncTask" +
-                "- Chamar o método execute do objeto asyncTask")
+        asyncTask?.cancel(true)
+        asyncTask = MemeAsyncTask(memeView, memeModel)
+        asyncTask?.execute()
     }
 }

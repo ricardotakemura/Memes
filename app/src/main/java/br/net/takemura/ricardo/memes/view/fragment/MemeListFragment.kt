@@ -39,20 +39,28 @@ class MemeListFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_meme_list, container, false)
         val memes = arguments?.get(argParamName) as ArrayList<Meme>
-        TODO("- Obter a propriedade visual RecyclerView e setar o adapter com uma instância da classe MemeRecycleViewAdapter" +
-                "- Obter a propriedade visual RecyclerView e setar o layoutManager com uma instância da classe LinearLayout" +
-                "- Obter a propriedade visual RecyclerView e passar o valor false para o método setHasFixedSize" +
-                "- Obter a propriedade visual SwipeRefreshLayout e setar o onRefreshListener com a propriedade onRefreshListener")
+        memeSwipeRefreshLayout = view.findViewById(R.id.memeSwipeRefreshLayout)
+        memeRecyclerView = view.findViewById<RecyclerView>(R.id.memeRecycleView).apply {
+            setHasFixedSize(false)
+            layoutManager = LinearLayoutManager(this.context)
+            adapter = MemeRecycleViewAdapter(memes)
+        }
+        if (onRefreshListener != null) {
+            memeSwipeRefreshLayout?.setOnRefreshListener(onRefreshListener)
+        }
+        return view
     }
 
     fun setOnRefreshListener(onRefreshListener: SwipeRefreshLayout.OnRefreshListener) {
-        TODO("- Setar a propriedade onRefreshListener com o valor passado por paramêtro" +
-                "- Obter a propriedade visual SwipeRefreshLayout e setar o onRefreshListener com o valor passado por paramêtro")
+        this.onRefreshListener = onRefreshListener
+        if (memeSwipeRefreshLayout != null) {
+            memeSwipeRefreshLayout?.setOnRefreshListener(onRefreshListener)
+        }
     }
 
     fun reload(memes: ArrayList<Meme>) {
-        TODO("- Obter a propriedade visual RecyclerView e setar o adapter com uma instância da classe MemeRecycleViewAdapter" +
-                "- Obter a propriedade visual SwipeRefreshLayout e setar o isRefreshing com o valor false")
+        memeRecyclerView?.adapter = MemeRecycleViewAdapter(memes)
+        memeSwipeRefreshLayout?.isRefreshing = false
     }
 
     companion object {
