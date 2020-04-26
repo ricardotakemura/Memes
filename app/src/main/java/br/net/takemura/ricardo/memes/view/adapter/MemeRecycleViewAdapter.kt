@@ -21,14 +21,14 @@ class MemeRecycleViewAdapter(private val memes: ArrayList<Meme>?) :
         var meme: Meme? = null
             set(value) {
                 field = value
-                TODO("Ao setar o valor da propriedade meme, colocar os valores nas Views correspondentes (objetos visuais da tela)")
-                TODO("Para a imagem, utilize o método estático ImageViewUtil.loadAsyncImageURL passando como paramêtros o objeto visual da class ImageView e a propriedade url do objeto da classe Meme")
+                TODO("- Ao setar o valor da propriedade meme, colocar os valores nas Views correspondentes (objetos visuais da tela)" +
+                     "- Para a imagem, utilize o método estático ImageViewUtil.loadAsyncImageURL passando como paramêtros o objeto visual da class ImageView e a propriedade url do objeto da classe Meme")
             }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MemeViewHolder {
-        TODO("Criar uma View do layout R.layout.view_meme_item")
-        TODO("Criar uma instância da classe MemeViewHolder passando a View do layout R.layout.view_meme_item e o Context")
+        TODO("- Criar uma View do layout R.layout.view_meme_item" +
+             "- Criar uma instância da classe MemeViewHolder passando a View do layout R.layout.view_meme_item e o Context")
     }
 
     override fun getItemCount(): Int {
